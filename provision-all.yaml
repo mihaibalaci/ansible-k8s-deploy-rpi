@@ -1,0 +1,45 @@
+---
+# bootstrap ansible new instance
+# this script will add ssh key and install python base for ansible connections
+
+- hosts: All
+  gather_facts: True
+  remote_user: root
+  become: yes
+#  become_user: root
+#  become_method: sudo
+
+  tasks:
+     - name: Update Ubuntu Packages
+        apt:
+          name: python
+          state: latest
+          update_cache: yes
+
+     - name: Update Centos Packages
+        yum:
+          name: python
+          state: latest
+
+    - name: Fancy way of doing authorized_keys for Root login
+       authorized_key: user=root
+                       exclusive=no
+                       key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+
+#   - name: COMMUN | Set environment
+#       blockinfile:
+#               dest: /etc/environment
+#               block: |
+#                    LC_ALL=en.US.UTF-8
+#                    LANG=en_US.UTF-8
+#               register: newenv
+#
+#     - block:
+#         - name: COMMUN | Generate locales
+#           raw: locale-gen en_US.UTF-8
+#
+#         - name: COMMUN | Reconfigure locales
+#           raw: dpkg-reconfigure locales
+#       when: newenv.changed
+~
