@@ -23,14 +23,14 @@ Master and nodes must have passwordless SSH access
 
 ## Usage
 
-Add the system information gathered above into a file called `hosts.ini` in the same directory as this README file. There is a template in the `inventory` directory. For example:
+Add the system information gathered above into a file called `hosts.ini` in the same directory as this README file. There is a template in the `inventory` directory. You may have a different network setup. For example:
 
 ```bash
 [master]
-192.16.35.12
+172.16.20.9 
 
 [node]
-192.16.35.[10:11]
+172.16.20.[10:13]
 
 [k3s_cluster:children]
 master
